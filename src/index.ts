@@ -12,53 +12,56 @@ interface RegexpInfo {
 
 const map = new Map<RegExp, RegexpInfo>()
 
-RegExp.prototype.exec = function(string) {
+function start() {
+  RegExp.prototype.exec = function(string) {
 
-  if (!map.has(this)) {
-    map.set(this, {
-      regex: this,
-      calls: []
+    if (!map.has(this)) {
+      map.set(this, {
+        regex: this,
+        calls: []
+      })
+    }
+    const info = map.get(this)!
+    const start = performance.now()
+    const result = _exec.call(this, string)  
+    const end = performance.now()
+    const duration = end - start
+
+    info.calls.push({
+      string,
+      duration
     })
+    return result
   }
-  const info = map.get(this)
-  const start = performance.now()
-  const result = _exec.call(this, string)  
-  const end = performance.now()
-  const duration = end - start
 
-  info.calls.push({
-    string,
-    duration
-  })
-  return result
+  function getTrace () {
+    return new Error().stack
+  }
+
+  class MyRegExp extends RegExp {
+    constructor(pattern: RegExp | string, flags?: string) {
+      console.log(getTrace()?.split('\n'))
+      super(pattern, flags)
+    }
+  }
+
+  globalThis.RegExp = MyRegExp as any
+
+  // const _constructor = RegExp.prototype.constructor
+  // RegExp.prototype.constructor = function(pattern: RegExp | string, flags?: string) {
+  //   console.log('new RegExp', pattern, flags)
+  //   return _constructor.call(this, pattern, flags)
+  // }
 }
 
-const regex = /play(123)/
-
-const regex1 = /(a|b|c)+/i
-const regex2 = /(a|b|c)+/
-
-regex.test('play123')
-
-'play456'.match(regex)
-
-// 'play789'.replace(regex, 'abc')
-
-regex1.test('abc')
-regex2.test('ABC')
+start()
 
 
-const regFoo = /foo/
 
-function foo (str: string) {
-  return str.match(regFoo)
-}
+await import('../playground/foo')
 
-foo('foo')
-foo('foo')
-foo('foo')
-foo('foo')
-foo('foo')
-foo('foo')
 
-console.dir(map, { depth: 2 })
+
+// console.dir(map, { depth: 1 })
+// console.log(map)
+

@@ -1,9 +1,29 @@
-import fs from 'node:fs/promises'
 
-import { startRegexDoctor } from '../src'
+const regex = /play\(\d+\)/
 
-using doctor = startRegexDoctor()
+// const regex1 = /(a|b|c)+/i
+// const regex2 = /(a|b|c)+/
 
-const regex  = /This   should not be matched/
+regex.test('play(123)')
+regex.test('play(123)')
 
-await fs.writeFile('regex-doctor.json', JSON.stringify(doctor.dump(), null, 2), 'utf-8')
+// 'play456'.match(regex)
+
+// 'play789'.replace(regex, 'abc')
+
+// regex1.test('abc')
+// regex2.test('ABC')
+const foo1 = new RegExp('foo')
+
+const regFoo = /foo/
+
+function foo (str: string) {
+  return str.match(regFoo)
+}
+
+foo('foo')
+foo('foo')
+foo('foo')
+foo('foo')
+foo('foo')
+foo('foo')
