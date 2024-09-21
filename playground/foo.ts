@@ -1,4 +1,3 @@
-
 const regex = /play\(\d+\)/
 
 // const regex1 = /(a|b|c)+/i
@@ -17,7 +16,7 @@ const foo1 = new RegExp('foo')
 
 const regFoo = /foo/
 
-function foo (str: string) {
+function foo(str: string) {
   return str.match(regFoo)
 }
 
@@ -27,3 +26,5 @@ foo('foo')
 foo('foo')
 foo('foo')
 foo('foo')
+
+export {}
