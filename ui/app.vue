@@ -6,7 +6,6 @@ useHead({
 </script>
 
 <template>
-  111
     <NuxtPage />
 </template>
 
