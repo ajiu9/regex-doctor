@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { SerializedRegExpInfo } from '../../src'
-const data = await $fetch('/api/payload') as SerializedRegExpInfo[]
+const payload = await $fetch('/api/payload') as SerializedRegExpInfo[]
 import { version } from '../../package.json'
 
 </script>
@@ -14,22 +14,22 @@ import { version } from '../../package.json'
     </div>
     <div p4 border="b base rounded" grid="~ cols-8">
       <DataField title="Unique regexes">
-       1
+        <NumberDisplay :number="10000" />
       </DataField>
       <DataField title="Regex instances">
-      2
+        <NumberDisplay :number="100" />
       </DataField>
       <DataField title="Regexes with details">
-       3
+        <NumberDisplay :number="100" />
       </DataField>
       <DataField title="Total regex execution time">
-        4
+        <NumberDisplay :number="100" />
       </DataField>
       <DataField title="Total time of the process">
-        5
+        <NumberDisplay :number="100" />
       </DataField>
     </div>
-    <div v-for="item, idx of data" :key="idx">
+    <div v-for="item, idx of payload" :key="idx">
       <code>/{{ item.regex.pattern }}/{{ item.regex.flags }}</code>
       <div>{{ item.calls.length }}</div>
     </div>
